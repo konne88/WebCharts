@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<!--
+Learning by sample documentation for the Chart Library
+
+Copyright (C) 25. Jan 2010  Konstantin Weitz
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any later 
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, see <http://www.gnu.org/licenses/>.
+-->
+
+<html>
+	<head>
+		<title>Canvas</title>
+		<style type="text/css" media="screen">
+			body { text-align:left; font-size:90%; font-family:Verdana, Geneva, Arial, Helvetica, sans-serif; margin:1em 4em; width:900px; margin:0 auto; }
+			p { text-align:justify; }
+			canvas { margin:10px; } /*border-width:1px; border-style:solid; border-color:black; }*/
+		</style>
+	</head>
+
+	<script type="text/javascript" src="chart.js"></script>
+	<script type="text/javascript" src="zins.js"></script>
+
+	<script type="text/javascript">
+		// Die Canvas-Funktion beim Laden der Seite aufrufen
+		if(window.addEventListener){
+			addEventListener("load", drawCanvas, false);
+		}
+
+		function annuity_change() {
+			var form = document.forms[0];
+			var graph0 = new Graph();
+			graph0.generate_annuitaet(parseFloat(form.debt.value),parseFloat(form.interest.value),parseFloat(form.clearance.value),1);
+			graph0.animate_canvas('graph0',300);
+
+			return graph0;
+		}
+
+		//Canvas zeichnen
+		function drawCanvas() {
+			var data1 = new Chart();
+			data1.add_bar("zServer",2);
+			data1.add_bar("VoiceRec",2.5);
+			data1.add_bar("zServer",2);
+			data1.add_bar("VoiceRec",1);
+			
+			var data2 = new Chart();
+			data2.add_series("Basic no thought put into speed",new Array(0.88,1.69,2.59,3.49,4.43,5.39,6.4,7.43,8.59,9.55));
+			data2.add_series("Starting cross out at Power",new Array(0.58,1.19,1.8,2.44,3.08,3.69,4.37,5.01,5.66,6.32));
+			data2.add_series("Removed even numbers from Array",new Array(0.3,0.61,0.92,1.25,1.57,1.89,2.22,2.56,2.86,3.21));
+			data2.add_series("Char Array",new Array(0.12,0.3,0.5,0.68,0.87,1.06,1.27,1.45,1.66,1.85));
+			data2.add_series("Bit Vector",new Array(0.04,0.09,0.16,0.28,0.49,0.8,1.18,1.58,1.96,2.33));
+			data2.add_series("Long Bit Vector",new Array(0.05,0.06,0.11,0.16,0.27,0.4,0.53,0.68,0.81,0.95));
+			data2.add_series("Threaded",new Array(0.13,0.48,0.74,1.16,1.44,2,2.29,2.64,2.9,2.29));
+			data2.add_series("Cross Out Limit Square Root",new Array(0.02,0.05,0.08,0.13,0.2,0.32,0.45,0.6,0.72,0.85));
+
+			// -------------------------------------------------------
+
+			var graph0 = annuity_change();
+			graph0.create_caption('debtcaption');
+
+			// -------------------------------------------------------
+
+			var chart1 = new PieChart();
+
+			chart1.add_bar("Lorem ipsum",2);
+			chart1.add_bar("dolor sit",3);
+			chart1.add_bar("amet",4);
+			chart1.add_bar("consetetur",2);
+			chart1.add_bar("sadipscing elitr",6);
+			chart1.add_bar("sed inca",1);
+			chart1.add_bar("diam",2);
+			
+			chart1.render_canvas('piechart1');
+
+			(new BarChart(chart1)).render_canvas('barchart1');
+
+			chart1.create_caption('caption1');
+
+			// --------------------------------------------------------
+
+			var chart2a = new BarChart();		
+			chart2a.add_bar("A",2);
+			chart2a.add_bar("B",2.5);
+			chart2a.add_bar("C",2.9);
+			chart2a.add_bar("D",1.2);
+			chart2a.render_canvas('chart2a');
+
+			var chart2b = new BarChart();
+			chart2b.colors = new Array("red");
+			chart2b.add_bar("A",2);
+			chart2b.add_bar("B",2.5);
+			chart2b.add_bar("C",2.9);
+			chart2b.add_bar("D",1.2);
+			chart2b.render_canvas('chart2b');
+
+			var chart2c = new BarChart();			
+			chart2c.colors = new Array("black","yellow");
+			chart2c.add_bar("A",2);
+			chart2c.add_bar("B",2.5);
+			chart2c.add_bar("C",2.9);
+			chart2c.add_bar("D",1.2);
+			chart2c.render_canvas('chart2c');
+
+			// --------------------------------------------------------
+
+			var chart3a = new BarChart(data2);
+			chart3a.render_canvas('chart3a');
+			var chart3b = new BarChart(data2);
+			chart3b.scale = 0.1;
+			chart3b.render_canvas('chart3b');
+			var chart3c = new BarChart(data2);
+			chart3c.scale = 1.8;
+			chart3c.render_canvas('chart3c');
+
+			var chart3d = new PieChart(data1);
+			chart3d.render_canvas('chart3d');
+			var chart3e = new PieChart(data1);
+			chart3e.scale = 0.2;
+			chart3e.render_canvas('chart3e');
+			var chart3f = new PieChart(data1);
+			chart3f.scale = 1;
+			chart3f.render_canvas('chart3f');
+
+			// --------------------------------------------------------
+
+			(new BarChart(data2)).animate_canvas('chart4a',5000);
+			(new Graph(data2)).animate_canvas('chart4b',5000);
+		}
+	</script>
+
+	<body>
+		<h1>The Chart Library</h1>
+
+		<canvas id="graph0" style="float:right" width="300" height="300"></canvas>
+
+		<p>
+		Lorem ipsum dolor sit amet, consetetur tempor invidunt ut labore et dolore magna aliquyam erat, accusam et justo duo dolores consetetur sadipscing elitr, sed diam voluptua <a href="chart.js">Chart Libaray Sources</a>. Stet clita kasd gubergren, no sea takimata sanctus est accusam et justo duo doloresLorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+		</p>
+		<div>
+			<div style="float:right" id="debtcaption"></div>
+			<form>
+				<p>Debt (in Euro):<br><input value="100" onchange="annuity_change()" name="debt" type="text" size="30" maxlength="30"></p>
+				<p>Interest (in Percent):<br><input value="10" onchange="annuity_change()" name="interest" type="text" size="30" maxlength="5"></p>
+				<p>Clearance (in Percent):<br><input value="10" onchange="annuity_change()" name="clearance" type="text" size="30" maxlength="5"></p>
+			</form>
+		</div><p>
+		Duis autem vel eum iriure consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. At vero eos et accusam et ut justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
+		</p>
+		<p>
+		Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. 
+		</p>
+		<p>
+		Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. 
+		</p>
+
+		<canvas id="piechart1" width="300" height="200" style="margin:20px;"></canvas>
+		<canvas id="barchart1" width="300" height="200" style="margin:20px;"></canvas>		
+		<div id="caption1" style="float:right;"></div>
+		
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non lectus eros. Suspendisse vulputate ante ut urna vulputate eget sodales turpis consequat. Donec justo lorem, viverra eget accumsan a, vehicula non odio. Suspendisse ipsum enim, interdum ut egestas hendrerit, pharetra sit amet erat. Donec ut arcu ut lectus placerat iaculis in at orci. Pellentesque imperdiet porttitor felis. Nunc lobortis arcu ut lorem bibendum eleifend. Duis nec urna at lacus dictum sodales. Nullam volutpat commodo faucibus. Aliquam varius euismod lectus nec hendrerit. Fusce dignissim euismod rutrum. Donec nec sem quam. Vestibulum fermentum sapien in neque hendrerit sit amet adipiscing massa tincidunt. Nam eget neque et nisi vehicula suscipit. Nullam consequat accumsan pretium.
+		</p>
+
+		<canvas id="chart2a" style="float:left;clear:both;margin:10px;" width="150" height="150"></canvas>
+		<canvas id="chart2b" style="float:left;clear:both;margin:10px;" width="150" height="150"></canvas>
+		<canvas id="chart2c" style="float:left;clear:both;margin:10px;" width="150" height="150"></canvas>
+		<p>
+Fusce lacinia interdum enim vel tempus. In placerat, felis et consequat faucibus, purus ipsum malesuada nibh, at aliquet orci eros a nibh. Cras luctus, eros ultrices faucibus congue, turpis elit rutrum justo, vel dictum lacus ante at turpis. Nam vehicula eros vel enim elementum tempus. Phasellus eget elit vel justo porttitor elementum. Proin eget metus non massa accumsan ullamcorper. Sed et diam nisl, sit amet elementum justo. Nulla vitae mauris eu metus fermentum scelerisque. Quisque tristique feugiat nunc, eleifend consequat ligula condimentum nec. Nam et leo at ipsum ornare lacinia. Integer a ipsum felis, ut porta nisl. Donec dapibus consectetur orci sed rutrum. Vestibulum venenatis scelerisque mi, vitae malesuada orci convallis nec. Mauris suscipit tortor id ligula semper eu bibendum nunc gravida. Phasellus posuere sollicitudin ultricies. Aenean ut mauris at lorem gravida euismod pellentesque vitae massa.
+		</p>
+		<p>
+Integer auctor enim eget nibh fringilla viverra. Duis rutrum vulputate fermentum. Praesent dictum suscipit erat ut porttitor. Etiam dignissim nulla non ipsum posuere interdum eget a quam. Curabitur luctus augue vulputate nisl aliquam pretium. Vivamus quis accumsan risus. Vestibulum vel lectus nec neque tincidunt rhoncus in sit amet nulla. Ut sed purus a nunc fermentum dictum. Proin semper urna vitae lorem scelerisque sagittis. Suspendisse vitae lorem a justo laoreet congue. Nulla facilisi. Suspendisse potenti. Suspendisse id ligula non enim faucibus tincidunt.
+		</p>
+		<p>
+Sed lacinia justo in nibh varius placerat ut mollis augue. Suspendisse ullamcorper ullamcorper libero eu viverra. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam malesuada, dolor nec pretium semper, ante neque tincidunt lacus, sit amet convallis turpis ante eu ipsum. Integer vestibulum blandit ante, a suscipit lacus semper vel. In placerat metus vitae neque imperdiet pulvinar. In felis felis, congue posuere congue non, pellentesque sit amet erat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent elementum turpis felis, posuere congue eros. Etiam eu felis sit amet diam accumsan volutpat vel sagittis nisi.
+		</p>
+		<p>
+Nunc euismod, ligula ut laoreet consectetur, neque nisl bibendum velit, vel tempus libero arcu quis nibh. Nunc pretium orci vel nisi pellentesque bibendum. Aliquam lacinia ornare aliquam. Sed ac congue risus. Fusce congue pellentesque eros, eu posuere felis tempor vitae. Cras feugiat leo eget nisl elementum porttitor. Nunc nec dui eu nunc dapibus rutrum. Proin nec mauris elit, ut aliquam dui. Integer id elit nunc, ac pellentesque tellus. Nulla mauris mi, congue ac adipiscing gravida, facilisis et justo. Maecenas ac massa turpis, id ultrices ante. Sed quis nisl id metus interdum vehicula tempus et ipsum. Duis auctor felis a diam viverra pulvinar. Proin eros est, placerat nec gravida et, tempus id orci. 
+		</p>
+		<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque ipsum, molestie quis volutpat nec, tempor in lacus. Pellentesque vulputate egestas nisl, ut pretium odio luctus at. Etiam quis tortor turpis, imperdiet commodo purus. Proin vel eros ac leo gravida mattis. Nam sollicitudin posuere felis, quis porttitor orci blandit vel. Curabitur lobortis, turpis in volutpat congue, neque mi ultrices lorem, vitae lobortis mi sapien et leo. Quisque ornare massa et dui lobortis tempus. Ut vitae risus scelerisque arcu scelerisque tincidunt. Suspendisse ornare imperdiet felis, quis egestas libero facilisis sed. Vestibulum pellentesque consectetur dictum.
+		</p>
+			<canvas id="chart3a" width="250" height="250" style="margin:10px"></canvas>
+			<canvas id="chart3b" width="250" height="250" style="margin:10px"></canvas>
+			<canvas id="chart3c" width="250" height="250" style="margin:10px"></canvas>
+
+		<p>
+Nulla et aliquet ipsum. Duis eu erat eget nibh hendrerit sagittis. Phasellus elit nisi, faucibus a congue et, fringilla sit amet ligula. Ut vel diam nunc. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin rhoncus, quam et dictum dapibus, arcu lacus ultricies ante, sed lacinia est felis in nibh. Donec rhoncus ipsum eu dui tincidunt sed pharetra est sagittis. Integer eget magna tortor, in hendrerit nunc. Sed felis metus, condimentum sed scelerisque id, condimentum nec nisl. Aenean eget libero elit, nec euismod mi. Vestibulum pellentesque leo et risus tincidunt gravida. Cras et tellus nec nisi euismod hendrerit.
+		</p>
+			<canvas id="chart3d" width="250" height="250" style="margin:10px;"></canvas>
+			<canvas id="chart3e" width="250" height="250" style="margin:10px"></canvas>
+			<canvas id="chart3f" width="250" height="350" style="margin:10px"></canvas>
+		<p>
+Etiam rhoncus, diam sed porta luctus, tellus elit posuere odio, in faucibus nisl neque ut tortor. Ut sed erat nec diam ultrices auctor vel sit amet odio. Phasellus ullamcorper molestie libero eu interdum. Morbi cursus metus quis justo pretium eleifend ut eget justo. Vestibulum interdum egestas elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam blandit molestie nisi et pharetra. In porta euismod massa vitae mattis. Morbi volutpat placerat lectus, a adipiscing dui ultrices eget. Donec condimentum neque non urna condimentum cursus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce tincidunt, lorem a imperdiet euismod, mi neque placerat leo, vel cursus massa nulla et ante. Nunc cursus vestibulum ipsum eu dignissim. Proin laoreet porttitor nulla in dictum. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+		</p>
+		<p>
+Pellentesque dignissim ante vel libero ornare tristique. Maecenas luctus consectetur libero, eu scelerisque lectus lacinia a. Donec ipsum erat, placerat at malesuada at, iaculis ac arcu. Cras a metus id velit egestas varius vitae in felis. Maecenas et mauris odio, ut varius est. Vestibulum sed diam risus. Donec condimentum eleifend mi, at volutpat metus auctor venenatis. Fusce vitae ipsum ut nulla congue convallis sit amet nec tellus. Vivamus non metus non lacus bibendum posuere quis tincidunt diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean a nisi vitae nibh gravida ullamcorper. Quisque quis turpis ut libero pretium cursus. Vivamus sem enim, pharetra non fermentum ut, accumsan quis tortor. Morbi fringilla urna quis eros tempor quis scelerisque nunc cursus. Donec dictum metus ac quam ultricies non molestie eros faucibus. Curabitur ipsum quam, eleifend quis cursus ut, volutpat nec nibh. Quisque euismod est dui.
+		</p>			
+			<canvas id="chart4a" width="300" height="500" style="float:right;margin:10px"></canvas>
+		<p>
+Nullam viverra bibendum interdum. Integer enim sem, condimentum id vestibulum non, dictum vitae velit. Pellentesque non pharetra turpis. Duis molestie urna vitae quam congue ornare. Nullam pretium mauris sed eros volutpat ultrices luctus urna tristique. Vivamus ac dictum enim. Duis venenatis elit nec leo pulvinar aliquam. Morbi tristique sem sit amet nunc congue sollicitudin. Sed libero sapien, porttitor quis tristique non, sodales nec eros. Aliquam erat volutpat. Donec ac neque turpis, et lobortis lectus. Donec a interdum lectus. Morbi aliquam sodales tristique. Fusce velit erat, consequat commodo ornare ac, aliquam ut metus. Sed fermentum tristique odio, lacinia blandit urna suscipit id. Integer fermentum ultricies magna, at pretium elit adipiscing eu. Praesent arcu lorem, tincidunt nec porttitor a, hendrerit ac ante. Aliquam dui sem, sodales eget rhoncus vitae, semper ut erat.
+		</p>
+		<p>
+Nulla elementum imperdiet tortor, a euismod eros scelerisque sit amet. In a cursus ligula. Ut lectus justo, commodo vel euismod non, vulputate in leo. Mauris mattis sapien in lacus accumsan quis adipiscing mi laoreet. Sed vel diam nec tellus convallis rutrum id non diam. Fusce sollicitudin lacus a leo interdum sed tristique sapien ullamcorper. Sed ut felis vitae libero porttitor porttitor. Phasellus rhoncus neque sed arcu pellentesque et rhoncus purus iaculis. Ut convallis adipiscing ipsum et elementum. Morbi tincidunt vestibulum odio, eu suscipit nisi tincidunt vitae. Mauris sit amet magna urna. Maecenas interdum lacinia diam, quis blandit sem facilisis non. Ut vel quam eget ante malesuada molestie. Morbi hendrerit, orci ullamcorper molestie semper, ante sapien vulputate arcu, nec varius justo enim in magna. Nunc et orci eget lorem bibendum posuere eget vel purus. Vivamus lectus sapien, consequat eu volutpat non, semper eu lorem.
+		</p>
+			<canvas id="chart4b" width="300" height="300" style="float:left;margin:10px;"></canvas>
+		<p>
+Mauris facilisis eleifend sapien, consectetur tristique lectus convallis a. Sed quis arcu eget lectus laoreet luctus quis sed leo. Praesent feugiat vestibulum pretium. Etiam in lorem sed nibh tincidunt tincidunt. Fusce lacinia magna magna, non venenatis libero. Ut nec dolor et mauris posuere faucibus blandit eget lorem. Proin luctus tristique diam in ultrices. In sit amet cursus dui. Vestibulum aliquam mi eu eros fringilla sit amet sagittis augue rhoncus. Curabitur quis neque neque, eget luctus ipsum. Morbi sit amet turpis enim, sed bibendum odio. Maecenas feugiat ultrices aliquet. Nulla iaculis tristique dui id adipiscing. Cras quam leo, porttitor ut posuere at, commodo et arcu. Sed quis tortor in nisl sollicitudin consectetur ut vel tellus. In hac habitasse platea dictumst. Curabitur sed elit in arcu adipiscing pellentesque. Pellentesque condimentum, orci eget aliquam scelerisque, dolor nisi rhoncus diam, in pellentesque mi massa vel augue. Nunc tincidunt metus sed velit viverra aliquam. Sed pharetra elementum justo id rutrum.
+		</p>
+		<p>
+Maecenas porta risus nec eros luctus vel lacinia libero sagittis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam in velit nec odio aliquam semper quis convallis lacus. Phasellus posuere, nibh quis euismod hendrerit, erat lectus ultricies quam, eget sodales nunc nulla in turpis. Nunc interdum dapibus consequat. Aenean rutrum, quam ut mollis lacinia, felis odio sollicitudin mi, eget aliquet erat enim commodo neque. In vulputate risus in nunc pellentesque vitae laoreet elit malesuada. Nullam et augue dui, in lobortis quam. Nam eu metus sem, et mattis nisi. Sed vel lectus eu magna posuere posuere. Pellentesque molestie cursus nisi, non feugiat augue tincidunt sit amet. Mauris a sem erat. Vivamus auctor enim at sem semper sed pellentesque velit tempus. Proin arcu dolor, pharetra eget eleifend in, venenatis ac felis. Sed placerat porta posuere.
+		</p>
+		<div id="testcaption"></div>
+	</body>
+</html>

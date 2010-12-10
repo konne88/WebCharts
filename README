@@ -1,0 +1,103 @@
+The Chart Library
+Small Javascript Framework for creating charts in the webbrowser
+
+Copyright (C) 25. Jan 2010  Konstantin Weitz
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any later 
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+this program; if not, see <http://www.gnu.org/licenses/>.
+
+Useful links
+Canvas documentation
+https://developer.mozilla.org/en/Canvas_tutorial
+
+The Basic Concept
+There is a single baseclass called Chart. It implements a standardised interface to add data to a chart, render it,
+And do some other fancy stuff. See below for more infos.
+But this class can't render your data  by default. So what you have to do is to actually create an Implementation of this class
+like PieChart. You can also create a Chart first, pack it with data and settings and pass it to the constructor of 
+an implementation. The implementation will copy all the data and then you can just render it. This is usefull
+if you plan to render the same Chart Data with different Implementations.
+
+Some Conventions
+If a function takes the parameters x,y,w,h this means, that it expects the boundaries of a rectangle.
+x and y represent the top-left corner of this rect and w,h the width and height.
+ 
+    y
+  x +------------
+    |            | 
+    |            | h
+    |            | 
+    |            |
+     ------------
+           w
+
+If a color is mentioned, this means a color string in CSS style.
+e.g. "red","blue","#ABCDEF","rgb(1,2,3)"
+Read more about default colors in the Chart description
+ 
+A context represents a 'thing you can draw on'. In most cases this
+Will be received by a canvas html element. Each Non-Internal function
+owns a wrapper, that can be called with the id of such a canvas.
+
+How To Start
+Quck start, simple example
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="chart.js"></script>
+		<script type="text/javascript">
+			if(window.addEventListener){
+				addEventListener("load", drawCanvas, false);
+			}
+
+			function drawCanvas(){
+				var chart1 = new PieChart();
+				chart1.add_bar("A",2);
+				chart1.add_bar("B",3);
+				chart1.add_bar("C",4);
+				chart1.render_canvas('cv1');
+			}
+		</script>
+	</head>
+	<body>
+		<canvas id="cv1" width="300" height="300"></canvas>
+	</body>
+</html> 
+
+If you want to know more, start by reading the comments about the Chart class
+And then the documentation for the Implementation of Chart you want to use.
+
+Inheritance
+Well this is JS, which is awesome, but there are many ways to do inheritance.
+The way it is performed here is one possibility, it is not perfect, but balances
+Complexity and Written text realtively speedy.
+
+Consider A to be the base class and B to be the class inheriting from A.
+ 
+In order to inheritance, we need to make sure, that the prototype of B has the prototype of A.
+If that is the case, then all of the functions (static objects) of A will be accesibly by B.
+So how do we do that? All objects of the type A have the wanted A prototype. The prototype of B
+is nothing else then an object. So why not just assign an object of the type A to the prototype of B.
+
+Well this is exactly what we do here:
+B.prototype = new A();
+
+What are the disandvantages? Well obviously we call a constructor in order to create an object, where
+we don't really care for the data in the object itsself at all. This is a serious downside
+of this method. Think about it, we actually have the data of some damn A object with the static functions of 
+the B class. But oh well it is simple and you don't really see the sideeffekts. 
+
+So now we know how we get those static functions what about properties. They are created in the constructor,
+by calling A.call(this).
+
+
